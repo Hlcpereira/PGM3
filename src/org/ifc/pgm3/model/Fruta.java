@@ -5,7 +5,7 @@
  *
  */
 
-package AV1;
+package AV2.org.ifc.pgm3.model;
 
 public class Fruta {
 

@@ -5,19 +5,17 @@
  *
  */
 
-
 /*
- * Classe destinada a "execução".
+ * Classe destinada a "execução" (e provavelmente/com toda certeza testes).
  * Modificações podem vir a ser necessárias!
  */
-package AV1;
+package AV2.org.ifc.pgm3;
+
+import AV2.org.ifc.pgm3.view.Tela;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Pe pe = new Pe();
-
-        pe.criarFrutaPe(false, "vermelha", "Maçã");
-
-        System.out.println(pe.imprime());
+        Tela tela = new Tela();
+		tela.setVisible(true);
     }
 }
