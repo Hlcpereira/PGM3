@@ -9,10 +9,10 @@
  * Código baseado no código exemplo feito em video aula.
  * Autor original: Hylson Vescovi <hvescovi@gmail.com>
  */
-package AV2.org.ifc.pgm3.view; 
+package AV3.org.ifc.pgm3.view; 
 
-import AV2.org.ifc.pgm3.model.Pe;
-import AV2.org.ifc.pgm3.dao.PeDAO;
+import AV3.org.ifc.pgm3.model.Pe;
+import AV3.org.ifc.pgm3.dao.PeDAO;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,18 +72,84 @@ public class Tela extends JFrame {
 		scrollPane.setSize(390,125);
 		contentPane.add(scrollPane);
 
-		// Inicializadores/Includers de valores para objetos a serem apresentados na tela
-		Pe p1 = new Pe();
-		Pe p2 = new Pe();
+		// rótulos
+		JLabel labelNome = new JLabel("Nome da Fruta:");
+		labelNome.setBounds(26, 184, 70, 15);
+		getContentPane().add(labelNome);
+		
+		JLabel labelCor = new JLabel("Cor da Fruta:");
+		labelCor.setBounds(26, 211, 70, 15);
+		getContentPane().add(labelCor);
+		
+		JLabel labelCitricidade = new JLabel("Cítrica? (true ou false):");
+		labelCitricidade.setBounds(26, 238, 70, 15);
+		getContentPane().add(labelCitricidade);
 
-		p1.setFrutaPe(false, "vermelha", "Maçã", 20);
-		p2.setFrutaPe(true, "verde", "Limão", 20);
+		JLabel labelQuantidade = new JLabel("Quantidade:");
+		labelQuantidade.setBounds(26, 265, 70, 15);
+		getContentPane().add(labelQuantidade);
+		
+		// caixas de texto
+		JTextField textNome = new JTextField();
+		textNome.setText("Nome Fruta");
+		textNome.setColumns(10);
+		textNome.setBounds(99, 182, 279, 19);
+		getContentPane().add(textNome);
+		
+		JTextField textCor = new JTextField();
+		textCor.setText("Cor Fruta");
+		textCor.setColumns(10);
+		textCor.setBounds(99, 209, 209, 19);
+		getContentPane().add(textCor);
+		
+		JTextField textCitricidade = new JTextField();
+		textCitricidade.setText("true ou false");
+		textCitricidade.setColumns(10);
+		textCitricidade.setBounds(99, 236, 135, 19);
+		getContentPane().add(textCitricidade);
 
-		dao.incluirPe(p1);
-		dao.incluirPe(p2);
+		JTextField textQuantidade = new JTextField();
+		textQuantidade.setText("Quantidade de Frutas");
+		textQuantidade.setColumns(10);
+		textQuantidade.setBounds(99, 263, 279, 19);
+		getContentPane().add(textQuantidade);
 
-		for (Pe p : dao.retornarPes()) {
-			dadosTabela.addRow(new String[] {p.getFrutaPe().getFrutaNome(), p.getFrutaPe().getCor(), String.valueOf(p.getFrutaPe().getCitrica()), String.valueOf(p.getQuantidade())});
-		}
+		// Botão de adicionar
+		JButton btnAdicionar = new JButton("Adicionar");
+		btnAdicionar.setBounds(389, 206, 100, 25);
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Obter informações inseridas
+				String nome = textNome.getText();
+				String cor = textCor.getText();
+				boolean citricidade = Boolean.getBoolean(textCitricidade.getText());
+				int quantidade = Integer.parseInt(textQuantidade.getText());
+
+				Pe p = new Pe();
+				p.setFrutaPe(citricidade, cor, nome, quantidade);
+				
+				// Adicionar no DAO
+				dao.incluirPe(p);
+
+				// Resetar os inputs
+				textNome.setText("");
+				textCor.setText("");
+				textCitricidade.setText("");
+				textQuantidade.setText("");
+			};
+		});
+		getContentPane().add(btnAdicionar);
+
+		// Botão de exibir
+		JButton btnExibir = new JButton("Exibir");
+		btnExibir.setBounds(389, 250, 100, 25);
+		btnExibir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (Pe p : dao.retornarPes()) {
+					dadosTabela.addRow(new String[] {p.getFrutaPe().getFrutaNome(), p.getFrutaPe().getCor(), String.valueOf(p.getFrutaPe().getCitrica()), String.valueOf(p.getQuantidade())});
+				};
+			};
+		});
+		getContentPane().add(btnExibir);
 	}
 }
